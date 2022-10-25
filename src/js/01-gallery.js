@@ -30,7 +30,24 @@ function createGallaryItemMarkup(galleryItems) {
     .join("");
 }
 
-const gallery = SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
+let modalWindow;
+
+function onGalleryContainerClick(evt) {
+    evt.preventDefault();
+    const isGalleryRef = evt.target.classList.contains('gallery__image');
+    if(!isGalleryRef){
+        return;
+    }
+    console.log(evt.target);
+
+    modalWindow = basicLightbox.create(`
+    <img src="${evt.target.dataset.source}" width="800" height="600">
+`)
+
+modalWindow.show();
+}
+
+const gallery = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
 });
