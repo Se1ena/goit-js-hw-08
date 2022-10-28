@@ -1,5 +1,6 @@
 import throttle from 'lodash.throttle';
 
+//Ключ для сховища 'feedback-form-state' у якому зберігаються поточні значення полів форми
 const STORAGE_KEY = 'feedback-form-state';
 
 const refs = {
@@ -11,11 +12,13 @@ const refs = {
 refs.form.addEventListener('submit', onFormSubmit);
 refs.textarea.addEventListener('input', throttle(onTextareaInput, 500));
 refs.input.addEventListener('input', throttle(onTextareaInput, 500));
+// сховище оновлюється не частіше, ніж раз на 500 мілісекунд
 
 let formData = {};
 
 saveData();
 
+// Під час сабміту форми очищується сховище і поля форми
 function onFormSubmit(evt){
     evt.preventDefault();   
     evt.currentTarget.reset();
@@ -36,5 +39,6 @@ function saveData(){
         formData = parsedFormData;
         refs.input.value = formData.email || '';
         refs.textarea.value = formData.message || '';
+        console.log(formData);
       }
 }
